@@ -12,7 +12,7 @@ Welcome to the EECS4314-ApacheFlinkResourceHub! This repository is a comprehensi
 | **Maaz Siddiqui**| `216 402 927`     | [msiddiqi@my.yorku.ca](mailto:msiddiqi@my.yorku.ca)                                           | [mbhsiddiqui](https://github.com/mbhsiddiqui)                                                  |
 | **Nabaa Gaziy**  | `215 820 095`     | [Nabaagz@my.yorku.ca](mailto:Nabaagz@my.yorku.ca)                                             | [Gaziy-Nabaa-215820095](https://github.com/Gaziy-Nabaa-215820095)                              |
 | **Rafael Dolores**| `216 142 069`    | [rafd47@my.yorku.ca](mailto:rafd47@my.yorku.ca)                                               | [Anselmo21](https://github.com/Anselmo21)                                                      |
-| **Walid AlDari** | `218 375 162`     | [walidald@my.yorku.ca](mailto:walidald@my.yorku.ca)                                           |                                                                                                |
+| **Walid AlDari** | `218 375 162`     | [walidald@my.yorku.ca](mailto:walidald@my.yorku.ca)                                           | [walido2001](https://github.com/walido2001)                                                                                               |
 | **Zach Ross**    | `217 066 119`     | [zachross@my.yorku.ca](mailto:zachross@my.yorku.ca)                                           | [xzippyzachx](https://github.com/xzippyzachx)                                                  |
 
 ## Apache Flink Resources
