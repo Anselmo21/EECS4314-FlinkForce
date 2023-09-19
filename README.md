@@ -1,6 +1,6 @@
 # EECS4314-ApacheFlinkResourceHub
 
-Welcome to the EECS4314-ApacheFlinkResourceHub! This repository is a comprehensive resource hub, curated as part of the EECS4314 Advanced Software Engineering course assignment. Our primary goal is to make the onboarding process for newcomers to the Apache Flink ecosystem as seamless as possible. Apache Flink is an open-source framework primarily designed for stream processing, with added batch processing capabilities.
+Welcome to the EECS4314-FlinkForce team's website, ,your gateway to insightful Apache Flink Analysis! This repository is a comprehensive resource hub, curated as part of the EECS4314 Advanced Software Engineering course assignment. Our primary goal is to make the onboarding process for newcomers to the Apache Flink ecosystem as seamless as possible. Apache Flink is an open-source framework primarily designed for stream processing, with added batch processing capabilities.
 
 ## Team FlinkForce
 
