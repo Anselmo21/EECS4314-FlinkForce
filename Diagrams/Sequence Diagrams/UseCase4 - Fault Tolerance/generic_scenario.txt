@@ -1,0 +1,71 @@
+@startuml
+
+box "Data Source" #LightBlue
+  participant "Source" as S
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as JM
+  participant "TaskManager1" as TM1
+  participant "TaskManager2" as TM2
+  participant "State Backend" as SB
+end box
+
+box "Data Sink" #LightYellow
+  participant "Sink" as SK
+end box
+
+S -> JM: Submit Data Stream
+activate JM
+
+JM -> TM1: Schedule Task (Initial)
+activate TM1
+
+TM1 -> S: Fetch Data (Batch 1)
+activate S
+S -> SB: Save Data Snapshot (Snapshot 1)
+activate SB
+SB -> JM: Snapshot 1 Saved
+deactivate SB
+deactivate S
+
+TM1 -> SK: Process and Send Data (Batch 1)
+activate SK
+SK -> JM: Acknowledge Receipt (Batch 1)
+deactivate SK
+
+== Take Second Snapshot ==
+
+TM1 -> S: Fetch Data (Batch 2)
+activate S
+S -> SB: Save Data Snapshot (Snapshot 2)
+activate SB
+SB -> JM: Snapshot 2 Saved
+deactivate SB
+deactivate S
+
+TM1 -> SK: Process and Send Data (Batch 2)
+activate SK
+SK -> JM: Acknowledge Receipt (Batch 2)
+deactivate SK
+
+== Fault Occurs ==
+
+JM -> TM2: Reschedule Task
+activate TM2
+
+TM2 -> SB: Retrieve Latest Saved Snapshot (Snapshot 2)
+activate SB
+SB -> TM2: Return Snapshot 2
+deactivate SB
+
+TM2 -> SK: Resume Data Processing from Snapshot 2
+activate SK
+SK -> JM: Acknowledge Receipt
+deactivate SK
+
+deactivate JM
+deactivate TM1
+deactivate TM2
+
+@enduml
