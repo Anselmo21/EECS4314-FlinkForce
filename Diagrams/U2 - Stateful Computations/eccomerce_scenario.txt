@@ -1,0 +1,68 @@
+@startuml
+
+box "User Interactions" #LightBlue
+  participant "User" as U
+end box
+
+box "E-commerce Platform" #LightPink
+  participant "Application" as App
+  participant "Recommendation Engine" as RE
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as B
+  participant "TaskManager1" as C1
+  participant "TaskManager2" as C2
+  participant "UserEventOperator" as D1
+  participant "RecommendationOperator" as D2
+  participant "State Backend" as F
+end box
+
+== User Interaction ==
+U -> App: Browse/Shop
+activate App
+App -> B: Emit User Events
+activate B
+
+== Fetch User Events ==
+B -> C1: Schedule Source Task
+activate C1
+C1 -> App: Fetch User Events
+C1 -> D1: Assign User Events
+activate D1
+D1 -> F: Retrieve Historical Behavior
+activate F
+F --> D1: Return Past Behavior
+deactivate F
+
+== Generate Personalized Recommendations ==
+D1 -> C2: Forward User Behavior & Events
+activate C2
+C2 -> D2: Perform Stateful Computation
+activate D2
+D2 -> F: Update User Behavior
+activate F
+F --> D2: Acknowledge Update
+deactivate F
+D2 -> RE: Generate Personalized Recommendations
+activate RE
+RE -> App: Update Recommendations
+deactivate RE
+App -> U: Display Personalized Experience
+deactivate App
+
+deactivate B
+deactivate C1
+deactivate C2
+
+@enduml
+
+================
+
+This sequence diagram illustrates the architecture and flow of a stateful computation in Apache Flink, particularly within the context of an e-commerce platform. The process initiates when a user interacts with the e-commerce application, triggering the generation of user events. These events are forwarded to Apache Flink's JobManager, which schedules the appropriate tasks. Two TaskManagers are involved, one to fetch the user events and another to carry out stateful computations. The diagram also emphasizes the role of the State Backend in maintaining and retrieving historical state information. Operator1 initially retrieves this state data to enrich incoming user events before they are processed by Operator2. This Operator performs the actual stateful computations, updating the persistent state in the State Backend as needed. The computed results are finally returned to the e-commerce application to provide a more personalized user experience.
+
+The sequence diagram encapsulates several operations that demonstrate the capability of Apache Flink to maintain and manipulate a persistent state while processing streams of data. Unlike simple stream processing, this stateful computation allows the system to conduct more complex analyses and pattern detection. The architecture explicitly includes a State Backend that serves as the data store for all stateful information. Operators interact with this backend to retrieve and update state, enabling them to perform tasks that are informed by historical data as well as real-time events.
+
+In the first sequence diagram, focused on stateful computations within an e-commerce platform, the processed data is immediately sent back to the application to influence the user's current interaction, providing a personalized experience. In this use case, the immediate consumption of the data is crucial for the application's functionality, and the concept of storing or "sinking" the data into a database or other storage service is not explicitly represented. The e-commerce application itself acts as the consumer or 'sink' of the processed data, utilizing it to tailor the user's experience in real-time.
+
+In contrast, the second sequence diagram emphasizes a more general stream processing pipeline. Here, processed data is often stored for downstream consumption, which might include further analysis, reporting, or batch processing. In this case, a separate Data Sink component is included to represent the endpoint for the processed data. This could be a database, a message queue, or any other storage or streaming service. The Data Sink acknowledges the receipt of this processed data, completing one cycle of stream processing.
