@@ -18,7 +18,6 @@ box "Flink Cluster" #LightGreen
   participant "State Backend" as F
 end box
 
-
 == User Interaction ==
 U -> App: Browse/Shop
 activate App
