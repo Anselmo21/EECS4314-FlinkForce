@@ -1,0 +1,78 @@
+@startuml
+
+box "Data Sources" #LightBlue
+  participant "Sensor Data" as SD
+  participant "Manufacturing Logs" as ML
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as JM
+  participant "TaskManager ETL" as TME
+  participant "TaskManager Analysis" as TMA
+end box
+
+box "Data Warehouse" #LightYellow
+  participant "Data Warehouse" as DW
+end box
+
+box "Analytics" #LightPink
+  participant "Analytics Dashboard" as AD
+end box
+
+activate JM
+
+== ETL Process ==
+
+JM -> TME: Schedule Extraction Task
+activate TME
+
+TME -> SD: Fetch Sensor Data
+activate SD
+SD -> TME: Return Sensor Data
+deactivate SD
+
+TME -> JM: Complete Extraction Task
+deactivate TME
+
+JM -> TME: Schedule Transformation Task
+activate TME
+
+TME -> TME: Transform Sensor Data
+
+TME -> JM: Complete Transformation Task
+deactivate TME
+
+JM -> TME: Schedule Load Task
+activate TME
+
+TME -> DW: Load Transformed Data into Data Warehouse
+activate DW
+DW -> JM: Acknowledge Data Load
+deactivate DW
+
+TME -> JM: Complete Load Task
+deactivate TME
+
+== Analysis Process ==
+
+JM -> TMA: Schedule Analysis Task
+activate TMA
+
+TMA -> DW: Fetch Transformed Data
+activate DW
+DW -> TMA: Return Transformed Data
+deactivate DW
+
+TMA -> TMA: Analyze Vaccine Production Parameters
+
+TMA -> AD: Update Analytics Dashboard
+activate AD
+AD -> JM: Acknowledge Dashboard Update
+deactivate AD
+
+TMA -> JM: Complete Analysis Task
+deactivate TMA
+
+deactivate JM
+
+@enduml
