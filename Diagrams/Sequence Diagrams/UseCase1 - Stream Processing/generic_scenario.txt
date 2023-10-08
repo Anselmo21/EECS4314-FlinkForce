@@ -1,0 +1,66 @@
+@startuml
+
+box "Stream Data Source" #LightBlue
+  participant "Data Producer" as A
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as B
+  participant "TaskManager1" as C1
+  participant "TaskManager2" as C2
+  participant "Operator1" as D1
+  participant "Operator2" as D2
+  participant "State Backend" as F
+end box
+
+box "Stream Data Sink" #LightYellow
+  participant "Data Sink" as E
+end box
+
+A -> B: Submit Stream Data
+activate B
+
+B -> C1: Schedule Source Task
+activate C1
+C1 -> A: Fetch Stream Data
+
+B -> C2: Schedule Processing Task
+activate C2
+
+C1 -> D1: Assign Data Partition
+activate D1
+D1 -> F: Check State
+activate F
+F --> D1: Return State
+deactivate F
+deactivate C1
+
+D1 -> C2: Forward Data Partition
+deactivate D1
+
+C2 -> D2: Invoke Transformation
+activate D2
+D2 -> F: Update State
+activate F
+F --> D2: Acknowledge
+deactivate F
+D2 --> C2: Return Transformed Data
+deactivate D2
+
+C2 -> E: Forward Transformed Data
+activate E
+E -> B: Acknowledge Receipt
+deactivate E
+
+deactivate B
+deactivate C2
+
+@enduml
+
+========================
+
+This sequence diagram provides an in-depth look at Apache Flink's stream processing architecture, delineating the interactions among a more extensive set of components. The diagram is organized into three main subsystems: the "Stream Data Source," which acts as the producer of real-time data; the "Flink Cluster," which comprises the heart of the processing logic and state management; and the "Stream Data Sink," which serves as the end consumer of the processed data. This detailed view highlights not just the data flow but also the underlying complexities such as task scheduling, state management, and data partitioning, which are central to Flink's ability to process streams efficiently.
+
+The middle box, labeled "Flink Cluster," is particularly noteworthy because it contains multiple TaskManagers and Operators, indicating a more complex, potentially distributed architecture. TaskManager1 is responsible for fetching the data from the Data Producer and assigning data partitions to Operator1. Operator1 interacts with the State Backend to fetch any necessary state information before forwarding the data partition to TaskManager2. TaskManager2 schedules another set of tasks for data transformation, which are executed by Operator2. Operator2 also interacts with the State Backend, this time to update the state based on the new data. This design implies a layered architecture within Flink, where different layers are responsible for different aspects of data processing, from initial data ingestion to transformation and state management.
+
+The sequence diagram also underscores the significance of state management in Flink, represented by interactions with the "State Backend." State management is crucial for enabling functionalities like event time processing, windowing, and fault tolerance. Both Operator1 and Operator2 interact with the State Backend, signifying that stateful operations could occur at various stages of data processing. By viewing this sequence diagram, one gains a comprehensive understanding of the robust, distributed, and stateful stream processing capabilities of Apache Flink, along with the complexity and flexibility that come with it. It serves as an essential guide for developers and architects to grasp the nuanced interactions and responsibilities of each component in the system.

@@ -1,71 +1,90 @@
 @startuml
 
-box "Data Source" #LightBlue
-  participant "Source" as S
+box "Job Submission" #LightBlue
+  participant "User" as U
 end box
 
 box "Flink Cluster" #LightGreen
   participant "JobManager" as JM
+  participant "Job Master" as JMaster
   participant "TaskManager1" as TM1
   participant "TaskManager2" as TM2
+  participant "TaskManager3" as TM3
   participant "State Backend" as SB
+  participant "Source Task" as ST
 end box
 
-box "Data Sink" #LightYellow
+box "Data Source/Sink" #LightYellow
+  participant "Source" as S
   participant "Sink" as SK
 end box
 
-S -> JM: Submit Data Stream
+== Job Submission ==
+
+U -> JM: Submit Job (Define Source, Sink, Tasks)
 activate JM
+JM -> JMaster: Assign Job
+activate JMaster
+deactivate JM
 
-JM -> TM1: Schedule Task (Initial)
+== Task Execution ==
+JMaster -> TM1: Schedule Source Task
 activate TM1
-
-TM1 -> S: Fetch Data (Batch 1)
+TM1 -> ST: Assign Configuration/Metadata
+activate ST
+ST -> S: Connect and Ingest Data (Batch 1)
 activate S
-S -> SB: Save Data Snapshot (Snapshot 1)
-activate SB
-SB -> JM: Snapshot 1 Saved
-deactivate SB
-deactivate S
+deactivate ST
 
-TM1 -> SK: Process and Send Data (Batch 1)
+TM1 -> SB: Save State Snapshot (Snapshot 1)
+activate SB
+SB --> TM1: Acknowledge Snapshot 1 Saved
+deactivate SB
+
+TM1 -> TM2: Process and Send Data (Batch 1)
+activate TM2
+TM2 -> SK: Send Data to Sink
 activate SK
-SK -> JM: Acknowledge Receipt (Batch 1)
 deactivate SK
+deactivate S
+deactivate TM2
 
 == Take Second Snapshot ==
 
-TM1 -> S: Fetch Data (Batch 2)
+ST -> S: Ingest Data (Batch 2)
+activate ST
 activate S
-S -> SB: Save Data Snapshot (Snapshot 2)
-activate SB
-SB -> JM: Snapshot 2 Saved
-deactivate SB
-deactivate S
+deactivate ST
 
-TM1 -> SK: Process and Send Data (Batch 2)
+TM1 -> SB: Save State Snapshot (Snapshot 2)
+activate SB
+SB --> TM1: Acknowledge Snapshot 2 Saved
+deactivate SB
+
+TM1 -> TM3: Process and Send Data (Batch 2)
+activate TM3
+TM3 -> SK: Send Data to Sink
 activate SK
-SK -> JM: Acknowledge Receipt (Batch 2)
 deactivate SK
+deactivate S
+deactivate TM3
 
 == Fault Occurs ==
 
-JM -> TM2: Reschedule Task
+JMaster -> TM2: Reschedule Task
 activate TM2
+deactivate TM1
 
 TM2 -> SB: Retrieve Latest Saved Snapshot (Snapshot 2)
 activate SB
-SB -> TM2: Return Snapshot 2
+SB --> TM2: Return Snapshot 2
 deactivate SB
 
 TM2 -> SK: Resume Data Processing from Snapshot 2
 activate SK
-SK -> JM: Acknowledge Receipt
 deactivate SK
 
-deactivate JM
-deactivate TM1
 deactivate TM2
+deactivate JMaster
 
 @enduml

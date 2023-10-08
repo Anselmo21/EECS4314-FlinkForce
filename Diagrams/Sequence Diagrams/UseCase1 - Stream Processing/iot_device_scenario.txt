@@ -1,0 +1,54 @@
+@startuml
+
+box "IoT Sensors" #LightBlue
+  participant "Sensor" as A
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as B
+  participant "TaskManager1" as C1
+  participant "TaskManager2" as C2
+  participant "Data Transformation Operator" as D1
+  participant "Real-Time Analytics Operator" as D2
+  participant "State Backend" as F
+end box
+
+box "Analytics Dashboard" #LightYellow
+  participant "Dashboard" as E
+end box
+
+== Data Ingestion ==
+A -> B: Emit Sensor Data
+activate B
+B -> C1: Schedule Ingestion Task
+activate C1
+C1 -> A: Fetch Sensor Data
+
+== Stream Processing ==
+B -> C2: Schedule Processing Task
+activate C2
+C1 -> D1: Assign Data Partition
+activate D1
+D1 -> F: Check Previous Sensor State
+activate F
+F --> D1: Return State
+deactivate F
+deactivate C1
+
+D1 -> D2: Forward Data for Real-Time Analysis
+activate D2
+D2 -> F: Update State with New Sensor Data
+activate F
+F --> D2: Acknowledge
+deactivate F
+D2 -> E: Send Real-Time Analytics Data
+activate E
+
+== Acknowledgement ==
+E -> B: Acknowledge Receipt
+deactivate B
+deactivate E
+
+deactivate C2
+
+@enduml

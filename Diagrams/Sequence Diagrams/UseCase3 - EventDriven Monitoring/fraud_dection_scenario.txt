@@ -1,0 +1,53 @@
+@startuml
+
+box "Financial System" #LightBlue
+  participant "TransactionSystem" as TS
+end box
+
+box "Flink Cluster" #LightGreen
+  participant "JobManager" as JM
+  participant "TaskManager" as TM
+  participant "FraudDetection" as FD
+  participant "State Backend" as SB
+end box
+
+box "Security Monitoring System" #LightYellow
+  participant "AlertService" as AS
+end box
+
+== Transaction Initiation ==
+TS -> JM: Emit Financial Transactions
+activate JM
+activate TS
+
+== Task Scheduling ==
+JM -> TM: Schedule Fraud Detection Task
+activate TM
+
+== Transaction Fetching ==
+TM -> TS: Fetch Transactions
+TS --> JM: Acknowledge Fetch
+deactivate TS
+
+== Fraud Detection ==
+TM -> FD: Assign Transactions for Analysis
+activate FD
+FD -> SB: Retrieve Transaction History
+activate SB
+SB --> FD: Return History
+deactivate SB
+
+FD -> FD: Analyze for Fraudulent Activity
+FD --> FD: Identified Suspicious Patterns
+
+== Trigger Alerts ==
+FD -> AS: Trigger Security Alerts
+activate AS
+AS --> JM: Acknowledge Alert Handling
+deactivate AS
+
+deactivate FD
+deactivate TM
+deactivate JM
+
+@enduml
