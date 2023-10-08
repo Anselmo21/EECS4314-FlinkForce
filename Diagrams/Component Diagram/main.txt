@@ -1,0 +1,29 @@
+@startuml
+
+package "Flink Cluster" {
+
+    [JobManager] as JM
+    [ResourceManager] as RM
+    [Dispatcher] as D
+    [JobMaster] as JMaster
+    [TaskManager] as TM
+    [Client] as C
+
+    JM --> RM : Uses
+    JM --> D : Uses
+    JM --> JMaster : Uses
+    C --> JM : Submits job
+    TM --> JM : Connects & gets work
+}
+
+package "Flink API" {
+    [DataSet] as DS
+    [DataStream] as DStream
+    [TableAPI] as TAPI
+}
+
+JM --> DS : Uses
+JM --> DStream : Uses
+JM --> TAPI : Uses
+
+@enduml
