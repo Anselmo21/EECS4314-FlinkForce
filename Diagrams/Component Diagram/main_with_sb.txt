@@ -1,5 +1,9 @@
 @startuml
 
+package "Flink Client" {
+    [Client] as C
+}
+
 package "Flink Cluster" {
 
     [JobManager] as JM
@@ -7,20 +11,16 @@ package "Flink Cluster" {
     [Dispatcher] as D
     [JobMaster] as JMaster
     [TaskManager] as TM
-    [Client] as C
     [State Backend] as SB
-    [In-Memory HashMap] as IMHM
-    [RocksDB] as Rocks
 
-    JM --> RM : Uses
-    JM --> D : Uses
-    JM --> JMaster : Uses
-    C --> JM : Submits job
+    JM --> RM : Resources allocated by
+    JM --> D : Interfaces with
+    JM --> JMaster : Controlled by
     TM --> JM : Connects & gets work
-    TM --> SB : Uses
-    SB --> IMHM : Can use
-    SB --> Rocks : Can use
+    TM --> SB : Stores data in
 }
+
+C --> D : Submits job
 
 package "Flink API" {
     [DataSet] as DS
@@ -28,8 +28,8 @@ package "Flink API" {
     [TableAPI] as TAPI
 }
 
-JM --> DS : Uses
-JM --> DStream : Uses
-JM --> TAPI : Uses
+C --> DS : Can use
+C --> DStream : Can use
+C --> TAPI : Can use
 
 @enduml
