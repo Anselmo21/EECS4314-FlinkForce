@@ -15,6 +15,11 @@ Welcome to the EECS4314-FlinkForce team's website, your gateway to insightful Ap
 | **Walid AlDari** | `218 375 162`     | [walidald@my.yorku.ca](mailto:walidald@my.yorku.ca)                                           | [walido2001](https://github.com/walido2001)                                                                                               |
 | **Zach Ross**    | `217 066 119`     | [zachross@my.yorku.ca](mailto:zachross@my.yorku.ca)                                           | [xzippyzachx](https://github.com/xzippyzachx)                                                  |
 
+## Assignment 1 - Conceptual Architecture
+
+- [Conceptual Architecture Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_1/Apache_Flink_Conceptual_Architecture_Presentation.pdf)
+- [Conceptual Architecture Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_1/EECS_4413_Flink_Force.pdf)
+
 ## Apache Flink Resources
 
 To get started with Apache Flink, we recommend watching an introductory video and reading a high-level overview, such as the one available on Wikipedia. The videos will guide you through setting up Flink, executing jobs, and understanding various facets of the framework. Once you're familiar with the basics, the official documentation and GitHub repository will be invaluable references.
