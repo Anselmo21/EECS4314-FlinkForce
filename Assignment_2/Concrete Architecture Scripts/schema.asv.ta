@@ -1,0 +1,38 @@
+
+// SCHEMA
+// Author: Jingwei Wu
+
+SCHEME TUPLE :
+
+cLinks		cFunction	cFunction
+contain		cFunction		cFunction
+// Inheritance
+
+$INHERIT	cFile	cSubSystem
+$INHERIT	cFunction	cFile
+
+// Relation Inheritance
+
+SCHEME ATTRIBUTE : 
+
+
+cSubSystem {
+	class_style = 4
+	color = (0.0 0.0 1.0)
+}
+
+cFile {
+	class_style = 2
+	color = (0.9 0.9 0.9)
+	labelcolor = (0.0 0.0 0.0)
+}
+
+
+cFunction {
+	color = (1.0 0.0 0.0)
+	labelcolor = (0.0 0.0 0.0)
+}
+
+(cLinks) {
+	color = (0.0 0.0 0.0)
+}
