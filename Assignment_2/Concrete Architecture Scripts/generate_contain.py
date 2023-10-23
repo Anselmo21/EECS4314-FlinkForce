@@ -1,5 +1,8 @@
+import os
 
-f_ta = open("flink_UnderstandFileDependency.raw.ta", "r")
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+f_ta = open(os.path.join(__location__, "flink_UnderstandFileDependency.raw.ta"), "r")
 lines = f_ta.readlines()
 f_ta.close()
 
@@ -23,7 +26,7 @@ def find_links(file_dir):
             links.append(split_line[2])
     return links
 
-f_contain = open("flink_UnderstandFileDependency.contain", "w")
+f_contain = open(os.path.join(__location__, "flink_UnderstandFileDependency.contain"), "w")
 
 for line in instance_lines:
     file_dir = line.split(" ")[1]
