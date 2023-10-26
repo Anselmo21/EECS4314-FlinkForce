@@ -10,7 +10,7 @@ def format_subsystems(subsystems):
 
 def filter_and_format_content(content, subsystems):
     content_lines = content.replace('"', '').replace("\\", "/").split('\n')
-    return "\n".join([line for line in content_lines if any(pattern in line for pattern in subsystems.keys())])
+    return "\n".join([line for line in content_lines if len(line) >= 2 and any(pattern in line.split(" ")[1] for pattern in subsystems.keys())])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate contain file for dependencies in .raw.ta file')

@@ -1,5 +1,7 @@
 {
-    "/flink-connectors/": "CONNECTORS.SS",
-    "/flink-python/": "FLINK-PYTHON.SS",
-    "/flink-runtime/": "RUNTIME.SS"
+    "flink-1.17.1/flink-runtime/src/test/java/org/apache/runtime/jobmanager/": "JobManager.ss",
+    "flink-1.17.1/flink-runtime/src/test/java/org/apache/runtime/jobmaster/": "JobMaster.ss",
+    "flink-1.17.1/flink-runtime/src/main/java/org/apache/runtime/resourcemanager/": "ResourceManager.ss",
+    "flink-1.17.1/flink-runtime/src/test/java/org/apache/runtime/dispatcher/": "Dispatcher.ss",
+    "flink-1.17.1/flink-runtime/src/test/java/org/apache/runtime/taskmanager/": "TaskManager.ss"
 }
