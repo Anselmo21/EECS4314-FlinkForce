@@ -2,7 +2,7 @@ import argparse
 import json
 
 def loadSubsystems() -> dict:
-    with open("subsystems.json", "r") as f:
+    with open("system_structure.json", "r") as f:
         return json.load(f)
     
 def buildDependencies(ta_file: str) -> list:
@@ -19,11 +19,29 @@ def buildDependencies(ta_file: str) -> list:
                 dependencies.append(from_file.strip("\"").replace("\"", ""))
     return dependencies
 
+def matchSubsystem(dependency, subsystems):
+    match = None
+    
+    # Check if current subsystem has children, if so go through them to leafs and check for matches bottom up
+    if 'children' in subsystems:
+        for child in subsystems['children']:
+            match = matchSubsystem(dependency, child)
+            if match:
+                break
+    
+    # If no match was found in the children, or there are no children, 
+    # try to match the current subsystem pattern
+    if not match and dependency.startswith(subsystems['pattern'].replace('*', '')):
+        match = subsystems['name']
+    
+    return match
+
 def printContainment(dependencies: list, contain_file: str, subsystems: dict):
     with open(contain_file, "w") as out:
-        [out.write(f"contain {sys} {d}\n") 
-         for d in dependencies 
-         for pattern, sys in subsystems.items() if pattern in d]
+        for d in dependencies:
+            ss = matchSubsystem(d, subsystems)
+            if ss:
+                out.write(f"contain {ss} {d}\n")
 
 if __name__ == "__main__":
     # get ta file
