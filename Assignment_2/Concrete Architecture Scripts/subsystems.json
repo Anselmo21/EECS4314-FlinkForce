@@ -1,0 +1,5 @@
+{
+    "/flink-connectors/": "CONNECTORS.SS",
+    "/flink-python/": "FLINK-PYTHON.SS",
+    "/flink-runtime/": "RUNTIME.SS"
+}
