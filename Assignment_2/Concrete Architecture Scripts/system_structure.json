@@ -25,12 +25,40 @@
                 {
                     "name": "TaskManager.ss",
                     "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskmanager/*"
+                },
+                {
+                    "name": "TaskExecutor.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskexecutor/*"
+                },
+                {
+                    "name": "State.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/state/*"
+                },
+                {
+                    "name": "Checkpoint.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/*"
+                },
+                {
+                    "name": "Entrypoint.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/entrypoint/*"
+                },
+                {
+                    "name": "Security.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/security/*"
                 }
             ]
         },
         {
             "name": "FlinkClients.ss",
             "pattern": "flink-clients/src/main/java/org/apache/client/*"
+        },
+        {
+            "name": "FlinkConnectors.ss",
+            "pattern": "flink-connectors/*"
+        },
+        {
+            "name": "FlinkTable.ss",
+            "pattern": "flink-table/*"
         }
     ]
 }
