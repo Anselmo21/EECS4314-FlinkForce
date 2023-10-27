@@ -8,13 +8,29 @@
             "children": [
                 {
                     "name": "JobManager.ss",
-                    "pattern": "src/main/java/org/apache/runtime/jobmanager/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmanager/*"
                 },
                 {
                     "name": "JobMaster.ss",
-                    "pattern": "src/main/java/org/apache/runtime/jobmaster/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmaster/*"
+                },
+                {
+                    "name": "ResourceManager.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/resourcemanager/*"
+                },
+                {
+                    "name": "Dispatcher.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/dispatcher/*"
+                },
+                {
+                    "name": "TaskManager.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskmanager/*"
                 }
             ]
+        },
+        {
+            "name": "FlinkClients.ss",
+            "pattern": "flink-clients/src/main/java/org/apache/client/*"
         }
     ]
 }

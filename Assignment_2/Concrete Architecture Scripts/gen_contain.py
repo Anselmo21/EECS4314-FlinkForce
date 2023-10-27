@@ -28,16 +28,31 @@ def matchSubsystem(dependency, subsystems):
             match = matchSubsystem(dependency, child)
             if match:
                 break
-    
-    # If no match was found in the children, or there are no children, 
-    # try to match the current subsystem pattern
-    if not match and dependency.startswith(subsystems['pattern'].replace('*', '')):
-        match = subsystems['name']
+    # Only match if this sub system not a parent system
+    # Since if parent systems contain files that child systems also contain, errors happen when running createContainment.bat
+    # (May not want to do this) (Maybe can fix with more checks?)
+    else:
+        # If no match was found in the children, or there are no children, 
+        # try to match the current subsystem pattern
+        if not match and subsystems['pattern'].replace('*', '') in dependency:
+            match = subsystems['name']
     
     return match
 
+def printContainmentSubsystems(out, subsystems: dict):
+    if 'children' in subsystems:
+        for child in subsystems['children']:
+            out.write(f"contain {subsystems['name']} {child['name']}\n")
+            printContainmentSubsystems(out, child)
+
 def printContainment(dependencies: list, contain_file: str, subsystems: dict):
     with open(contain_file, "w") as out:
+        # Print sub system dependencies
+        printContainmentSubsystems(out, subsystems)
+
+        out.write(f"\n")
+
+        # Print file dependencies
         for d in dependencies:
             ss = matchSubsystem(d, subsystems)
             if ss:
