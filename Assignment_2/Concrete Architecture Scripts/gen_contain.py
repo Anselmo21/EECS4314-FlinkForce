@@ -34,7 +34,7 @@ def matchSubsystem(dependency, subsystems):
     else:
         # If no match was found in the children, or there are no children, 
         # try to match the current subsystem pattern
-        if not match and subsystems['pattern'].replace('*', '') in dependency:
+        if not match and subsystems['pattern'] in dependency:
             match = subsystems['name']
     
     return match

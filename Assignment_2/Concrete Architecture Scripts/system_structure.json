@@ -1,64 +1,94 @@
 {
     "name": "flink",
-    "pattern": "flink-1.17.1/*",
+    "pattern": "flink-1.17.1/",
     "children": [
         {
             "name": "Runtime.ss",
-            "pattern": "flink-runtime/*",
+            "pattern": "flink-runtime/",
             "children": [
                 {
                     "name": "JobManager.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmanager/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmanager/"
                 },
                 {
                     "name": "JobMaster.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmaster/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobmaster/"
                 },
                 {
                     "name": "ResourceManager.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/resourcemanager/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/resourcemanager/"
                 },
                 {
                     "name": "Dispatcher.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/dispatcher/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/dispatcher/"
                 },
                 {
                     "name": "TaskManager.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskmanager/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskmanager/"
                 },
                 {
                     "name": "TaskExecutor.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskexecutor/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/taskexecutor/"
                 },
                 {
                     "name": "State.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/state/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/state/"
                 },
                 {
                     "name": "Checkpoint.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/",
+                    "children": [
+                        {
+                            "name": "CheckpointCoordinator.ss",
+                            "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/CheckpointCoordinator"
+                        },
+                        {
+                            "name": "Channel.ss",
+                            "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/channel/"
+                        },
+                        {
+                            "name": "Hooks.ss",
+                            "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/hooks/"
+                        },
+                        {
+                            "name": "Metadata.ss",
+                            "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/metadata/"
+                        }
+                    ]
+                },
+                {
+                    "name": "ExecutionGraph.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/executiongraph/"
+                },
+                {
+                    "name": "JobGraph.ss",
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/jobgraph/"
                 },
                 {
                     "name": "Entrypoint.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/entrypoint/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/entrypoint/"
                 },
                 {
                     "name": "Security.ss",
-                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/security/*"
+                    "pattern": "flink-runtime/src/main/java/org/apache/runtime/security/"
                 }
             ]
         },
         {
-            "name": "FlinkClients.ss",
-            "pattern": "flink-clients/src/main/java/org/apache/client/*"
+                "name": "FlinkClients.ss",
+                "pattern": "flink-clients/src/main/java/org/apache/client/"
         },
         {
             "name": "FlinkConnectors.ss",
-            "pattern": "flink-connectors/*"
+            "pattern": "flink-connectors/"
         },
         {
             "name": "FlinkTable.ss",
-            "pattern": "flink-table/*"
+            "pattern": "flink-table/"
+        },
+        {
+            "name": "Core.ss",
+            "pattern": "flink-core/"
         }
     ]
 }
