@@ -53,6 +53,10 @@
                         {
                             "name": "Metadata.ss",
                             "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/metadata/"
+                        },
+                        {
+                            "name": "FileMerging.ss",
+                            "pattern": "flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/filemerging/"
                         }
                     ]
                 },
