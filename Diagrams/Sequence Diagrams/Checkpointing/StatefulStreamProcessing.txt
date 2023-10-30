@@ -1,0 +1,67 @@
+@startuml
+Title: Apache Flink Checkpointing Process Sequence Diagram
+
+box "flink" #LightBlue
+  participant Core.ss
+end box
+
+box "Checkpoint.ss" #LightGreen
+  participant CheckpointCoordinator.ss
+  participant MetaData.ss
+  participant Hooks.ss
+  participant Channel.ss
+end box
+
+box "Runtime.ss" #LightYellow
+  participant JobMaster.ss
+  participant ExecutionGraph.ss
+  participant JobGraph.ss
+  participant TaskExecutor.ss
+  participant TaskManager.ss
+  participant State.ss
+end box
+
+Core.ss->CheckpointCoordinator.ss: TriggerCheckpoint()
+CheckpointCoordinator.ss->Hooks.ss: ExecutePreCheckpointHooks()
+Hooks.ss->State.ss: AccessStateData()
+Hooks.ss->MetaData.ss: CollectCheckpointMetadata()
+MetaData.ss-->Hooks.ss: Metadata
+Hooks.ss->Channel.ss: StartDataTransfer()
+Channel.ss-->Hooks.ss: DataTransferComplete()
+Hooks.ss->MetaData.ss: CompleteCheckpoint()
+MetaData.ss-->Hooks.ss: Metadata
+Hooks.ss->State.ss: ExecutePostCheckpointHooks()
+State.ss-->Hooks.ss: Post-checkpoint Actions
+CheckpointCoordinator.ss->MetaData.ss: TriggerCheckpoint()
+CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointTrigger()
+Hooks.ss->Channel.ss: TriggerCheckpoint()
+Channel.ss-->Hooks.ss: ConfirmCheckpointTrigger()
+Hooks.ss-->CheckpointCoordinator.ss: NotifyCheckpointTriggerComplete()
+CheckpointCoordinator.ss->Channel.ss: StartDataTransfer()
+Channel.ss->CheckpointCoordinator.ss: DataTransferComplete()
+CheckpointCoordinator.ss->MetaData.ss: NotifyCheckpointComplete()
+CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointComplete()
+Hooks.ss-->Channel.ss: CompleteCheckpoint()
+Channel.ss-->CheckpointCoordinator.ss: ConfirmCheckpointCompletion()
+
+JobMaster.ss->CheckpointCoordinator.ss: TriggerCheckpoint()
+CheckpointCoordinator.ss->JobGraph.ss: DefineJobStructure()
+JobGraph.ss->ExecutionGraph.ss: InitializeExecutionGraph()
+ExecutionGraph.ss->CheckpointCoordinator.ss: RegisterExecutionGraph()
+CheckpointCoordinator.ss->TaskExecutor.ss: ExecuteCheckpoint()
+TaskExecutor.ss->TaskManager.ss: NotifyCheckpoint()
+TaskManager.ss->State.ss: CaptureState()
+State.ss->Channel.ss: StartStateDataTransfer()
+Channel.ss->CheckpointCoordinator.ss: DataTransferComplete()
+CheckpointCoordinator.ss->State.ss: NotifyCheckpointComplete()
+TaskManager.ss->State.ss: RestoreState()
+State.ss->CheckpointCoordinator.ss: StateRestorationConfirmation()
+CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointComplete()
+Hooks.ss->Channel.ss: CompleteCheckpoint()
+Channel.ss->CheckpointCoordinator.ss: ConfirmCheckpointCompletion()
+
+@enduml
+
+========================
+
+The sequence diagram provides a representation of the interactions and steps involved in the Apache Flink checkpointing process, which is a critical aspect of maintaining the consistency and fault tolerance of stateful stream processing applications. The process begins with Core.ss triggering the checkpoint, which is then coordinated by CheckpointCoordinator.ss. Before checkpoint execution, custom pre-checkpoint hooks are executed in Hooks.ss, and metadata about the checkpoint is collected in MetaData.ss. Data transfer is facilitated by Channel.ss to ensure that the state data is captured and transferred correctly. Post-checkpoint hooks are then executed by Hooks.ss. The checkpoint trigger is acknowledged, and data transfer is confirmed. CheckpointCoordinator.ss notifies MetaData.ss of the checkpoint's completion. Furthermore, JobMaster.ss plays a key role in triggering checkpointing, and the job structure is defined in JobGraph.ss. The execution graph is initialized in ExecutionGraph.ss, and the checkpoint coordinator registers it. The actual execution of the checkpoint is carried out by TaskExecutor.ss, with state capture and restoration handled by State.ss. The successful state restoration is confirmed, and the completion of checkpoint data transfer is acknowledged. In summary, this sequence diagram outlines a simplified yet essential overview of the complex interactions and the order of execution for various components involved in the Flink checkpointing process, which is vital for maintaining the reliability and consistency of stateful stream processing applications.
