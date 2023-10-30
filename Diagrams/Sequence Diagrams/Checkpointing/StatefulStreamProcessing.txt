@@ -1,5 +1,5 @@
 @startuml
-Title: Apache Flink Checkpointing Process Sequence Diagram
+Title: Apache Flink Stateful Stream Processing Checkpointing
 
 box "flink" #LightBlue
   participant Core.ss
@@ -61,7 +61,3 @@ Hooks.ss->Channel.ss: CompleteCheckpoint()
 Channel.ss->CheckpointCoordinator.ss: ConfirmCheckpointCompletion()
 
 @enduml
-
-========================
-
-The sequence diagram provides a representation of the interactions and steps involved in the Apache Flink checkpointing process, which is a critical aspect of maintaining the consistency and fault tolerance of stateful stream processing applications. The process begins with Core.ss triggering the checkpoint, which is then coordinated by CheckpointCoordinator.ss. Before checkpoint execution, custom pre-checkpoint hooks are executed in Hooks.ss, and metadata about the checkpoint is collected in MetaData.ss. Data transfer is facilitated by Channel.ss to ensure that the state data is captured and transferred correctly. Post-checkpoint hooks are then executed by Hooks.ss. The checkpoint trigger is acknowledged, and data transfer is confirmed. CheckpointCoordinator.ss notifies MetaData.ss of the checkpoint's completion. Furthermore, JobMaster.ss plays a key role in triggering checkpointing, and the job structure is defined in JobGraph.ss. The execution graph is initialized in ExecutionGraph.ss, and the checkpoint coordinator registers it. The actual execution of the checkpoint is carried out by TaskExecutor.ss, with state capture and restoration handled by State.ss. The successful state restoration is confirmed, and the completion of checkpoint data transfer is acknowledged. In summary, this sequence diagram outlines a simplified yet essential overview of the complex interactions and the order of execution for various components involved in the Flink checkpointing process, which is vital for maintaining the reliability and consistency of stateful stream processing applications.
