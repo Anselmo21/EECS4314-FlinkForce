@@ -53,10 +53,6 @@
                         {
                             "name": "Metadata.ss",
                             "pattern": "flink-runtime/src/main/java/org/apache/runtime/checkpoint/metadata/"
-                        },
-                        {
-                            "name": "FileMerging.ss",
-                            "pattern": "flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/filemerging/"
                         }
                     ]
                 },
@@ -93,6 +89,14 @@
         {
             "name": "Core.ss",
             "pattern": "flink-core/"
+        },
+        {
+            "name": "FlinkStateBackends.ss",
+            "pattern": "flink-state-backends/"
+        },
+        {
+            "name": "FlinkStreamingJava.ss",
+            "pattern": "flink-streaming-java/"
         }
     ]
 }
