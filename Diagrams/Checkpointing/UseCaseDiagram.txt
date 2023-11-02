@@ -1,20 +1,22 @@
 @startuml
-actor "Data Source" as DataSource
-actor "Data Sync" as DataSync
+actor "Data-Source" as DataSource
+note left of DataSource: e.g. Kafka Message Source
+actor "Data-Sink" as DataSink
+note right of DataSink: e.g. HBase
 
-rectangle "Apache Flink" {
-  usecase "Processed Logic" as ProcessedLogic
-  usecase "Side Effected Logic" as SideEffectedLogic
-  usecase "Processed State" as ProcessedState
+rectangle "Flink App" {
+  usecase "Perform Stateful Computations" as StatefulComputations
+  usecase "Process Streams" as StreamProcess
+  usecase "Perform Checkpoint" as Checkpoint
+  usecase "Store Data" as DistributedFileStorage
 }
 
-usecase "Event Driven Application Checkpointing" as Checkpointing
 
-DataSource --> Checkpointing : Send Data
-Checkpointing --> ProcessedLogic : Processed Logic
-Checkpointing --> SideEffectedLogic : Side Effected Logic
-Checkpointing --> ProcessedState : Processed State
-ProcessedState --> Checkpointing : Update State
-Checkpointing --> DataSync : Send Processed Data
-DataSync --> Checkpointing : Receive Processed Data
+DataSource --> StreamProcess: send data
+StreamProcess --> DataSink: send data
+StatefulComputations --> StreamProcess : process events
+Checkpoint --> StreamProcess: maintains state
+Checkpoint --> DistributedFileStorage: provides fault tolerance
+
+
 @enduml

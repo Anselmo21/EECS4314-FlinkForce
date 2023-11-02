@@ -22,42 +22,96 @@ box "Runtime.ss" #LightYellow
 end box
 
 Core.ss->CheckpointCoordinator.ss: TriggerCheckpoint()
+
+Activate CheckpointCoordinator.ss
+
 CheckpointCoordinator.ss->Hooks.ss: ExecutePreCheckpointHooks()
+
+Activate Hooks.ss
+
 Hooks.ss->State.ss: AccessStateData()
+State.ss-->Hooks.ss: StateData
+
 Hooks.ss->MetaData.ss: CollectCheckpointMetadata()
 MetaData.ss-->Hooks.ss: Metadata
+
 Hooks.ss->Channel.ss: StartDataTransfer()
+Activate Channel.ss
 Channel.ss-->Hooks.ss: DataTransferComplete()
+
 Hooks.ss->MetaData.ss: CompleteCheckpoint()
 MetaData.ss-->Hooks.ss: Metadata
+
 Hooks.ss->State.ss: ExecutePostCheckpointHooks()
 State.ss-->Hooks.ss: Post-checkpoint Actions
+
+Deactivate Hooks.ss
+
 CheckpointCoordinator.ss->MetaData.ss: TriggerCheckpoint()
 CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointTrigger()
+
+Activate Hooks.ss
+
 Hooks.ss->Channel.ss: TriggerCheckpoint()
 Channel.ss-->Hooks.ss: ConfirmCheckpointTrigger()
 Hooks.ss-->CheckpointCoordinator.ss: NotifyCheckpointTriggerComplete()
+
+Deactivate Hooks.ss
+
+
 CheckpointCoordinator.ss->Channel.ss: StartDataTransfer()
 Channel.ss->CheckpointCoordinator.ss: DataTransferComplete()
+
 CheckpointCoordinator.ss->MetaData.ss: NotifyCheckpointComplete()
 CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointComplete()
-Hooks.ss-->Channel.ss: CompleteCheckpoint()
+
+Activate Hooks.ss
+
+Hooks.ss->Channel.ss: CompleteCheckpoint()
 Channel.ss-->CheckpointCoordinator.ss: ConfirmCheckpointCompletion()
+
+Deactivate Hooks.ss
+
+Deactivate CheckpointCoordinator.ss
 
 JobMaster.ss->CheckpointCoordinator.ss: TriggerCheckpoint()
 CheckpointCoordinator.ss->JobGraph.ss: DefineJobStructure()
+
 JobGraph.ss->ExecutionGraph.ss: InitializeExecutionGraph()
 ExecutionGraph.ss->CheckpointCoordinator.ss: RegisterExecutionGraph()
+
+
+Activate CheckpointCoordinator.ss
+
 CheckpointCoordinator.ss->TaskExecutor.ss: ExecuteCheckpoint()
 TaskExecutor.ss->TaskManager.ss: NotifyCheckpoint()
 TaskManager.ss->State.ss: CaptureState()
+
+Activate State.ss
+
 State.ss->Channel.ss: StartStateDataTransfer()
 Channel.ss->CheckpointCoordinator.ss: DataTransferComplete()
+
+Deactivate State.ss
+
 CheckpointCoordinator.ss->State.ss: NotifyCheckpointComplete()
 TaskManager.ss->State.ss: RestoreState()
+
+Activate State.ss
+
 State.ss->CheckpointCoordinator.ss: StateRestorationConfirmation()
+
+Deactivate State.ss
+
+Activate Hooks.ss
+
 CheckpointCoordinator.ss->Hooks.ss: NotifyCheckpointComplete()
+
+
 Hooks.ss->Channel.ss: CompleteCheckpoint()
 Channel.ss->CheckpointCoordinator.ss: ConfirmCheckpointCompletion()
+
+Deactivate Hooks.ss
+Deactivate CheckpointCoordinator.ss
 
 @enduml

@@ -1,22 +1,28 @@
 @startuml
-state "Stateful Stream Processing" as StatefulProcessing {
-  [*] --> Running: run data
-  Running --> Checkpointing: checkpointing
-  Running--> ProcessingData: processing
-  Checkpointing--> CheckpointComplete: Complete
-  Checkpointing--> CheckpointFail: Fail
-  ProcessingData--> Running 
-  CheckpointComplete--> Running 
-  CheckpointFail--> Running 
-}
 
-note right of StatefulProcessing
-  The checkpointing feature of Apache Flink
-  is especially useful for stateful stream
-  processing applications. For example, a
-  system that saves the state of a user's
-  transactions can use checkpointing to
-  save the state on a regular basis and
-  recover it in the event of a failure.
-end note
+state "Running" as Running
+state "Triggering Checkpoint" as TriggeringCheckpoint
+state "Taking Checkpoint" as TakingCheckpoint
+state "Saving Checkpoint" as SavingCheckpoint
+state "Completed" as Completed
+state "Failed" as Failed
+
+[*] --> Running: Initial State
+
+Running --> TriggeringCheckpoint: StartCheckpoint
+TriggeringCheckpoint --> TakingCheckpoint: Triggered
+
+TakingCheckpoint --> SavingCheckpoint: Started
+SavingCheckpoint --> TakingCheckpoint: Checkpoint Successful
+SavingCheckpoint --> Failed: Checkpoint Failed
+TakingCheckpoint --> Failed: Checkpoint Failed
+
+TakingCheckpoint --> Completed: Checkpoint Completed
+SavingCheckpoint --> Completed: Checkpoint Completed
+
+TriggeringCheckpoint --> Failed: Checkpoint Failed
+
+Failed --> Running: Recover
+Running --> Completed: Job Completed
+
 @enduml
