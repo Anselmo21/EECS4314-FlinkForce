@@ -20,6 +20,12 @@ Welcome to the EECS4314-FlinkForce team's website, your gateway to insightful Ap
 - [Conceptual Architecture Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_1/Apache_Flink_Conceptual_Architecture_Presentation.pdf)
 - [Conceptual Architecture Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_1/EECS_4413_Flink_Force.pdf)
 
+## Assignment 2 - Concrete Architecture
+
+- [Concrete Architecture Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_2/Apache_Flink_Concrete_Architecture_Presentation.pdf)
+- [Concrete Architecture Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_2/EECS_4413_Flink_Force_Concrete_Architecture_Report.pdf)
+- [.contain File](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_2/Concrete%20Architecture%20Scripts/flink_UnderstandFileDependency.contain)
+
 ## Apache Flink Resources
 
 To get started with Apache Flink, we recommend watching an introductory video and reading a high-level overview, such as the one available on Wikipedia. The videos will guide you through setting up Flink, executing jobs, and understanding various facets of the framework. Once you're familiar with the basics, the official documentation and GitHub repository will be invaluable references.
