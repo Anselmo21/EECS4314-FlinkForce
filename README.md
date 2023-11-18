@@ -29,6 +29,7 @@ Welcome to the EECS4314-FlinkForce team's website, your gateway to insightful Ap
 ## Assignment 3 - Discrepancy Analysis
 
 - [Discrepancy Analysis Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_3/Apache_Flink_Discrepancy_Analysis_Presentation.pdf)
+- [Discrepancy Analysis Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_3/EECS_4413_Flink_Force_Discrepancy_Analysis.pdf)
 
 ## Apache Flink Resources
 
