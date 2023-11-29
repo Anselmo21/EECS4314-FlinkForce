@@ -31,6 +31,10 @@ Welcome to the EECS4314-FlinkForce team's website, your gateway to insightful Ap
 - [Discrepancy Analysis Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_3/Apache_Flink_Discrepancy_Analysis_Presentation.pdf)
 - [Discrepancy Analysis Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_3/EECS_4413_Flink_Force_Discrepancy_Analysis.pdf)
 
+## Assignment 4 - Dependency Extraction
+
+- [Dependency Extraction Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_4/Apache_Flink_Dependency_Extraction_Presentation.pdf)
+
 ## Apache Flink Resources
 
 To get started with Apache Flink, we recommend watching an introductory video and reading a high-level overview, such as the one available on Wikipedia. The videos will guide you through setting up Flink, executing jobs, and understanding various facets of the framework. Once you're familiar with the basics, the official documentation and GitHub repository will be invaluable references.
