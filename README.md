@@ -34,6 +34,7 @@ Welcome to the EECS4314-FlinkForce team's website, your gateway to insightful Ap
 ## Assignment 4 - Dependency Extraction
 
 - [Dependency Extraction Presentation](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_4/Apache_Flink_Dependency_Extraction_Presentation.pdf)
+- [Dependency Extraction Report](https://github.com/Anselmo21/EECS4314-FlinkForce/blob/main/Assignment_4/EECS_4314_Flink_Force_Dependency_Analysis_Report.pdf)
 
 ## Apache Flink Resources
 
